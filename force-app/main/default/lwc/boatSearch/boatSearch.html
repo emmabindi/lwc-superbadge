@@ -1,0 +1,28 @@
+<template>
+  <!-- Include a standard <lightning-spinner> in the boatSearch, 
+        using alternative-text = "Loading". The spinner must match the 
+        (SLDS) brand color.
+        Show the spinner while the form is loading the boats. Use the attribute isLoading 
+        via the two following methods: handleLoading() and handleDoneLoading().
+    The component boatSearch must also have a button to create a new boat. 
+    To keep the design simple to use and maintain, Byanca requested you use a 
+    <lightning-button> inside a slot called actions. Label it New Boat and 
+        invoke a function named createNewBoat() that uses the NavigationMixin 
+        extension to open a standard form so the user can create a new boat record.
+        -->
+  <lightning-layout multiple-rows>
+    <lightning-layout-item size="12">
+      <lightning-card title="Find a Boat">
+        <!-- New Boat button goes here -->
+        <p class="slds-var-p-horizontal_small">
+          <!-- boatSearchForm component goes here -->
+        </p>
+      </lightning-card>
+    </lightning-layout-item>
+    <lightning-layout-item size="12" class="slds-p-top_small slds-is-relative">
+      <!-- Spinner goes here -->
+      <!-- boatSearchResults goes here -->
+      <!-- onloading={handleLoading} ondoneloading={handleDoneLoading} -->
+    </lightning-layout-item>
+  </lightning-layout>
+</template>
