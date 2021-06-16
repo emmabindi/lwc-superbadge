@@ -44,5 +44,9 @@
         <members>*</members>
         <name>StaticResource</name>
     </types>
-    <version>45.0</version>
+        <types>
+        <members>Friend_Ships</members>
+        <name>CustomTab</name>
+    </types>
+    <version>47.0</version>
 </Package>
