@@ -1,4 +1,5 @@
-import { LightningElement } from 'lwc';
+import { LightningElement, track } from 'lwc';
+import getBoats from '@salesforce/apex/BoatDataService.getBoats';
 
  export default class BoatSearch extends LightningElement {
     isLoading = false;
@@ -7,8 +8,21 @@ import { LightningElement } from 'lwc';
     
     handleDoneLoading() { }
     
-    // This custom event comes from the form
-    searchBoats(event) { }
+    searchBoats(event) {
+      console.log('inside searchBoats ');
+
+      this.isLoading = true;
+      getBoats(event.detail).then(result => {
+        this.isLoading = false;
+        this.handleDoneLoading;
+        // handle the result which is a list of boats 
+        console.log('result ' + result);
+      }).catch(error => {
+        console.log('inside error');
+        this.isLoading = false;
+      })
+
+    }
     
     createNewBoat() { }
   }
