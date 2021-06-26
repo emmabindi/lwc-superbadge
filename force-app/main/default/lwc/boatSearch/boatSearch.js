@@ -4,22 +4,25 @@ import getBoats from '@salesforce/apex/BoatDataService.getBoats';
  export default class BoatSearch extends LightningElement {
     isLoading = false;
     
-    handleLoading() { }
+    handleLoading() { 
+      this.isLoading = true;
+    }
     
-    handleDoneLoading() { }
+    handleDoneLoading() {
+      this.isLoading = false;
+     }
     
     searchBoats(event) {
       console.log('inside searchBoats ');
-
-      this.isLoading = true;
+      this.handleLoading;
+      
       getBoats(event.detail).then(result => {
-        this.isLoading = false;
-        this.handleDoneLoading;
         // handle the result which is a list of boats 
         console.log('result ' + result);
+        this.handleDoneLoading;
       }).catch(error => {
         console.log('inside error');
-        this.isLoading = false;
+        this.handleDoneLoading;
       })
 
     }
