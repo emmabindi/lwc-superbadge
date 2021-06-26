@@ -17,35 +17,27 @@ export default class BoatSearchResults extends LightningElement {
     @wire(MessageContext)
     messageContext;
 
-   @wire(getBoats, {boatTypeId: this.boatTypeId})
-    wiredBoats;
-   
-    wiredBoats({error, data }) {
+   @wire(getBoats, { boatTypeId: '$boatTypeId'})
+    wiredBoats({error, data}) {
         if (error) {
             console.log('error');
         } else if (data) {
             console.log('data ' + data);
-            this.boats = data.boats;
+            // this.boats = data.boats;
         }
-     }
+    }
 
     @api
     searchBoats(boatTypeId) { 
-        this.notifyLoading;
-        console.log('inside searchBoats');
-        console.log('boatTypeId ' + boatTypeId);
+        // this.notifyLoading;
+        console.log('inside searchBoats in Results');
+        console.log('54 boatTypeId ' + boatTypeId);
         this.boatTypeId = boatTypeId;
-
-        /*getBoats(event.detail).then(result => {
-            // handle the result which is a list of boats 
-            console.log('result ' + result);
-          }).catch(error => {
-            console.log('inside error');
-          })*/
+        // here call wiredBoats or getBoats with a param?
+        this.wiredBoats(this.boatTypeId);
     }
 
-  // this public function must refresh the boats asynchronously
-  // uses notifyLoading
+  // this public function must refresh the boats asynchronously uses notifyLoading
     refresh() { }
     
     // this function must update selectedBoatId and call sendMessageService

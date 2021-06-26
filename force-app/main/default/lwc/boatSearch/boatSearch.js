@@ -12,20 +12,15 @@ import { LightningElement, track } from 'lwc';
      }
     
     searchBoats(event) {
-      console.log('inside searchBoats ');
+      console.log('inside searchBoats in boatSearch ');
       this.handleLoading;
       // this is parent we need to call method searchBoats from child boatSearchReuslts
       // and pass it the typeId 
+      console.log('boatTypeId ' + event.detail.boatTypeId);
       const child = this.template.querySelector('c-boat-search-results');
       console.log('child ' + child);
       const boatTypeId = event.detail.boatTypeId;
       child.searchBoats(boatTypeId);
-      /* 
-     Customize this function to pass the value of boatTypeId to the
-      public function searchBoats(boatTypeId) from the boatSearchResults component, 
-      so it can be used by getBoats().
-    */
-
     }
     
     createNewBoat() { }
