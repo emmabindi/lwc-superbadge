@@ -1,3 +1,33 @@
 <template>
-  <p>Results</p>
+  <lightning-tabset>
+    <lightning-tab label="Gallery">
+      <div class="slds-scrollable_y">
+        <lightning-layout multiple-rows class="slds-align-middle">
+          <template for:each={boats.data} for:item="boat">
+            <lightning-layout-item
+              key={boat.Id}
+              class="slds-p-around_small"
+              small-device-size="6"
+              medium-device-size="4"
+              large-device-size="3"
+              size="12"
+            >
+              <c-boat-tile>
+                <!-- passing both the currently selected boat Id 
+                  and the information about the boat in each iteration,
+                   by using the custom event named boatselect created in 
+                   the boatTile component-->
+              </c-boat-tile>
+            </lightning-layout-item>
+          </template>
+        </lightning-layout>
+      </div>
+    </lightning-tab>
+    <lightning-tab label="Boat Editor">
+      <!-- Scrollable div and lightning datatable go here -->
+    </lightning-tab>
+    <lightning-tab label="Boats Near Me">
+      <!-- boatsNearMe component goes here -->
+    </lightning-tab>
+  </lightning-tabset>
 </template>

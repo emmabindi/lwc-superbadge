@@ -19,6 +19,7 @@ import getBoats from '@salesforce/apex/BoatDataService.getBoats';
       getBoats(event.detail).then(result => {
         // handle the result which is a list of boats 
         console.log('result ' + result);
+        console.log(JSON.stringify(result));
         this.handleDoneLoading;
       }).catch(error => {
         console.log('inside error');
