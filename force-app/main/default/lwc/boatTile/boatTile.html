@@ -1,0 +1,30 @@
+<template>
+  <div onclick={selectBoat} class={tileClass}>
+    <div style={backgroundStyle} class="tile"></div>
+    <div class="lower-third">
+      <!-- Boat information goes here -->
+    </div>
+  </div>
+</template>
+<!-- 
+For this reason, the JavaScript file requires two different attributes to receive information about 
+the boat that displays in the tile (boat) and the currently selected boat Id (selectedBoatId). 
+Make sure to use the correct decorators for these attributes.
+
+The boat image must be set as the background of a <div> with a class equals to tile and it must be 
+  retrieved via a function named backgroundStyle(). The return of this function must be a string that contains the background-image:url() function, showing the boat picture from the field Picture__c on the Boat__c object.
+
+Add the boat name and boat owner to the bottom of the tile, inside a <div> using lower-third as 
+  the class for this <div>. Your work must look like the design provided by Renata Pan as seen in all the 
+    images present in this project.
+
+The boat name must be inside an <h1> tag using the slds-truncate and slds-text-heading_medium classes.
+The boat’s owner’s name must be added to an <h2> tag that uses the slds-truncate and slds-text-heading_small classes.
+The boat price must use a Lightning formatted number, with a maximum of two fraction digits, 
+in a <div> that uses the slds-text-body_small class.
+The boat length must be in a <div> that uses the slds-text-body_small class.
+The boat type must be in a <div> that uses the slds-text-body_small class.
+
+
+
+-->

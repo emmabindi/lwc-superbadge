@@ -1,3 +1,5 @@
 import { LightningElement } from 'lwc';
 
-export default class BoatSearchResults extends LightningElement {}
+export default class BoatSearchResults extends LightningElement {
+    
+}
