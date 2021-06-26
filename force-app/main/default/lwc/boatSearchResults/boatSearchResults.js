@@ -17,7 +17,7 @@ export default class BoatSearchResults extends LightningElement {
     @wire(MessageContext)
     messageContext;
 
-    /*@wire(getBoats, {boatTypeId: this.boatTypeId})
+   /* @wire(getBoats, {boatTypeId: this.boatTypeId})
     wiredBoats;
    
     wiredBoats({error, data }) {
@@ -29,20 +29,18 @@ export default class BoatSearchResults extends LightningElement {
         }
      }*/
 
-    // public function that updates the existing boatTypeId property
-    // uses notifyLoading
+    @api
     searchBoats(boatTypeId) { 
+        this.notifyLoading;
         console.log('inside searchBoats');
         console.log('boatTypeId ' + boatTypeId);
-        // had this in the parent but I need to search here?? 
+        this.boatTypeId = boatTypeId;
 
         /*getBoats(event.detail).then(result => {
             // handle the result which is a list of boats 
             console.log('result ' + result);
-            this.handleDoneLoading;
           }).catch(error => {
             console.log('inside error');
-            this.handleDoneLoading;
           })*/
     }
 
