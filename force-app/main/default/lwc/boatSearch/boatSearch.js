@@ -15,16 +15,15 @@ import getBoats from '@salesforce/apex/BoatDataService.getBoats';
     searchBoats(event) {
       console.log('inside searchBoats ');
       this.handleLoading;
-      
-      getBoats(event.detail).then(result => {
-        // handle the result which is a list of boats 
-        console.log('result ' + result);
-        console.log(JSON.stringify(result));
-        this.handleDoneLoading;
-      }).catch(error => {
-        console.log('inside error');
-        this.handleDoneLoading;
-      })
+      // this is parent we need to call method searchBoats from child boatSearchReuslts
+      // and pass it the typeId 
+      const child = this.template.querySelector('c-boat-search-results');
+      console.log('child');
+      /* 
+     Customize this function to pass the value of boatTypeId to the
+      public function searchBoats(boatTypeId) from the boatSearchResults component, 
+      so it can be used by getBoats().
+    */
 
     }
     

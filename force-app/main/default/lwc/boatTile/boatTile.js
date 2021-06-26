@@ -1,10 +1,10 @@
-import { LightningElement, track } from "lwc";
+import { LightningElement, api } from "lwc";
 
+TILE_WRAPPER_SELECTED_CLASS = 'tile-wrapper selected';
+TILE_WRAPPER_UNSELECTED_CLASS = 'tile-wrapper';
 export default class BoatTile extends LightningElement {
-    @track boat;
-    @track selectedBoatId;
-    TILE_WRAPPER_SELECTED_CLASS = 'tile-wrapper selected';
-    TILE_WRAPPER_UNSELECTED_CLASS = 'tile-wrapper';
+    @api boat;
+    @api selectedBoatId;
     
     // Getter for dynamically setting the background image for the picture
     get backgroundStyle() {
