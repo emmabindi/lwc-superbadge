@@ -17,7 +17,7 @@ export default class BoatSearchResults extends LightningElement {
     @wire(MessageContext)
     messageContext;
 
-   /* @wire(getBoats, {boatTypeId: this.boatTypeId})
+   @wire(getBoats, {boatTypeId: this.boatTypeId})
     wiredBoats;
    
     wiredBoats({error, data }) {
@@ -27,7 +27,7 @@ export default class BoatSearchResults extends LightningElement {
             console.log('data ' + data);
             this.boats = data.boats;
         }
-     }*/
+     }
 
     @api
     searchBoats(boatTypeId) { 
