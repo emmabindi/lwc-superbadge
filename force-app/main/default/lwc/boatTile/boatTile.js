@@ -13,16 +13,13 @@ export default class BoatTile extends LightningElement {
      }
 
     get tileClass() { 
-      if (this.selectedBoatId) {
+      if (this.selectedBoatId == this.boat.Id) {
         return TILE_WRAPPER_SELECTED_CLASS; 
       } else {
         return TILE_WRAPPER_UNSELECTED_CLASS;
       }
     }
     
-    /*
-     Make sure you are wiring the messageContext in the boatSearchResults component
-    in order to publish the message.*/
     selectBoat() { 
       console.log('inside selectBoat in boatTile');
       console.log(this.boat.Id);

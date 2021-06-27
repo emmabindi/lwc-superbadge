@@ -1,6 +1,7 @@
 import { LightningElement, wire, api, track } from 'lwc';
-import { MessageContext } from 'lightning/messageService';
+import { publish, MessageContext } from 'lightning/messageService';
 import getBoats from '@salesforce/apex/BoatDataService.getBoats';
+import BOAT_SELECTED_MESSAGE from '@salesforce/messageChannel/BoatMessageChannel__c';
 import { getRecord, updateRecord } from 'lightning/uiRecordApi';
 
 const SUCCESS_TITLE = 'Success'; 
@@ -16,8 +17,7 @@ export default class BoatSearchResults extends LightningElement {
     isLoading = false;
     error;
 
-    @wire(MessageContext)
-    messageContext;
+    @wire(MessageContext) messageContext;
 
    @wire(getBoats, { boatTypeId: '$boatTypeId'})
     wiredBoats({error, data}) {
@@ -50,6 +50,9 @@ export default class BoatSearchResults extends LightningElement {
     updateSelectedTile(event) { 
         console.log('inside updateSelectedTile in results');
         console.log('e: ' + event.detail.boatId);
+        this.selectedBoatId = event.detail.boatId;
+        publish(this.messageContext, BOAT_SELECTED_MESSAGE, 
+            { recordId: this.selectedBoatId })
     }
     
     // Publishes the selected boat Id on the BoatMC.
