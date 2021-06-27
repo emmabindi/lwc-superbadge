@@ -1,4 +1,5 @@
-import { api, LightningElement, wire } from 'lwc'; 
+import { api, LightningElement, wire, track } from 'lwc';
+import getBoatsByLocation from '@salesforce/apex/BoatDataService.getBoatsByLocation';
 
 const LABEL_YOU_ARE_HERE = 'You are here!';
 const ICON_STANDARD_USER = 'standard:user';
@@ -6,36 +7,41 @@ const ERROR_TITLE = 'Error loading Boats Near Me';
 const ERROR_VARIANT = 'error';
 
 export default class BoatsNearMe extends LightningElement {
-  boatTypeId;
+  @api boatTypeId = '';
   mapMarkers = [];
   isLoading = true;
-  isRendered = false;
+  @track isRendered = false;
   latitude;
   longitude;
   
-  // Add the wired method from the Apex Class
-  // Name it getBoatsByLocation, and use latitude, longitude and boatTypeId
   // Handle the result and calls createMapMarkers
-  wiredBoatsJSON({error, data}) { }
+  @wire(getBoatsByLocation, { latitude: '$latitude', longitude: '$longitude', boatTypeId: '$boatTypeId'})
+  wiredBoatsJSON({error, data}) { 
+      if (data) {
+          console.log('data: ' + data);
+          // this.createMapMarkers(pass in the lat//);
+      } else if (error) {
+          console.log('error: ' + error);
+      } 
+      this.isLoading = false;
+  }
   
-  // Controls the isRendered property
   renderedCallback() { 
       console.log('inside rendered' + this.isRendered);
+      console.log(this.isRendered);
+      console.log('boat ' + this.boatTypeId);
       if (!this.isRendered) {
           this.getLocationFromBrowser();
-      }
+      } 
       this.isRendered = true;
   }
   
   getLocationFromBrowser() {
-      console.log('inside getLocationFromBrowser');
-      console.log(navigator.geolocation.getCurrentPosition((position) => {
-          console.log('99: ' + position);
-      }
-      ));
       navigator.geolocation.getCurrentPosition(position => {
           this.latitude = position.coords.latitude;
           this.longitude = position.coords.longitude;
+          console.log('lat: ' + this.latitude);
+          console.log('long: ' + this.longitude);
       });
    }
    
