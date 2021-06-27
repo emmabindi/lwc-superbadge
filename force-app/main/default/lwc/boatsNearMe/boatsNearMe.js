@@ -46,7 +46,6 @@ export default class BoatsNearMe extends LightningElement {
    
   createMapMarkers(boatData) {
      const boatJSON = JSON.parse(boatData);
-     console.log('boatJSON ' + boatJSON);
       
      const newMarkers = boatJSON.map(boat => (
         {
@@ -57,7 +56,6 @@ export default class BoatsNearMe extends LightningElement {
             title: boat.Name
         }
      ));
-    console.log('n ' + newMarkers);
     
     newMarkers.unshift({
         location: {
@@ -67,7 +65,6 @@ export default class BoatsNearMe extends LightningElement {
         title: LABEL_YOU_ARE_HERE,
         icon: ICON_STANDARD_USER
     });
-    console.log('after ' + newMarkers[0].title);
     this.isLoading = false;
     this.mapMarkers = newMarkers;
     }
