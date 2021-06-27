@@ -62,6 +62,13 @@ export default class BoatMap extends LightningElement {
   // Creates the map markers array with the current boat's location for the map.
   updateMap(Longitude, Latitude) {
     console.log('inside updateMap');
+    this.mapMarkers = [{
+      location: {
+        Longitude: Longitude,
+        Latitude: Latitude
+      }
+    }];
+    console.log('this.mapMarkers ' + this.mapMarkers);
   }
 
   // Getter method for displaying the map component, or a helper method.
