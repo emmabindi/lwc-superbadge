@@ -9,7 +9,7 @@ const ERROR_VARIANT = 'error';
 
 export default class BoatsNearMe extends LightningElement {
   @api boatTypeId = '';
-  mapMarkers = [];
+  @track mapMarkers = [];
   isLoading = true;
   @track isRendered = false;
   latitude;
@@ -24,8 +24,8 @@ export default class BoatsNearMe extends LightningElement {
             title: ERROR_TITLE,
             variant: ERROR_VARIANT
         }));
+        this.isLoading = false;
       } 
-      this.isLoading = false;
   }
   
   renderedCallback() { 
@@ -58,7 +58,7 @@ export default class BoatsNearMe extends LightningElement {
         }
      ));
     console.log('n ' + newMarkers);
-    /*
+    
     newMarkers.unshift({
         location: {
             Latitude: this.latitude,
@@ -67,6 +67,8 @@ export default class BoatsNearMe extends LightningElement {
         title: LABEL_YOU_ARE_HERE,
         icon: ICON_STANDARD_USER
     });
-    console.log('after ' + newMarkers);*/
+    console.log('after ' + newMarkers[0].title);
+    this.isLoading = false;
+    this.mapMarkers = newMarkers;
     }
 }
