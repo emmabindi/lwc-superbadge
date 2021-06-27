@@ -1,5 +1,6 @@
 import { api, LightningElement, wire, track } from 'lwc';
 import getBoatsByLocation from '@salesforce/apex/BoatDataService.getBoatsByLocation';
+import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 
 const LABEL_YOU_ARE_HERE = 'You are here!';
 const ICON_STANDARD_USER = 'standard:user';
@@ -18,10 +19,12 @@ export default class BoatsNearMe extends LightningElement {
   @wire(getBoatsByLocation, { latitude: '$latitude', longitude: '$longitude', boatTypeId: '$boatTypeId'})
   wiredBoatsJSON({error, data}) { 
       if (data) {
-          console.log('data: ' + data);
-          // this.createMapMarkers(pass in the lat//);
+          this.createMapMarkers(data);
       } else if (error) {
-          console.log('error: ' + error);
+        this.dispatchEvent(new ShowToastEvent({
+            title: ERROR_TITLE,
+            variant: ERROR_VARIANT
+        }));
       } 
       this.isLoading = false;
   }
@@ -47,7 +50,9 @@ export default class BoatsNearMe extends LightningElement {
    
   // Creates the map markers
   createMapMarkers(boatData) {
-     // const newMarkers = boatData.map(boat => {...});
+     const newMarkers = boatData.map(boat => {
+         console.log('boat: ' + boat);
+     });
      // newMarkers.unshift({...});
    }
 }
