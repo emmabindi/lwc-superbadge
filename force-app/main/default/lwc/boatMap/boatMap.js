@@ -56,11 +56,10 @@ export default class BoatMap extends LightningElement {
   }
 
   handleMessageReceived(msg) {
-    console.log('msg: ' + msg);
+    this.boatId = msg.recordId;
   }
 
   connectedCallback() {
-    console.log('inside connectedCallback');
     this.subscribeMC();
   }
 
