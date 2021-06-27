@@ -3,8 +3,8 @@ import { api, wire, LightningElement } from "lwc";
 import { subscribe, MessageContext, APPLICATION_SCOPE, unsubscribe } from 'lightning/messageService';
 import { getRecord } from 'lightning/uiRecordApi';
 
-const LONGITUDE_FIELD = '@salesforce/schema/Boat__c.Geolocation__Longitude__s';
-const LATITUDE_FIELD = '@salesforce/schema/Boat__c.Geolocation__Latitude__s';
+const LONGITUDE_FIELD = 'Boat__c.Geolocation__Longitude__s';
+const LATITUDE_FIELD = 'Boat__c.Geolocation__Latitude__s';
 const BOAT_FIELDS = [LONGITUDE_FIELD, LATITUDE_FIELD];
 export default class BoatMap extends LightningElement {
   
@@ -27,7 +27,7 @@ export default class BoatMap extends LightningElement {
 
   @wire(MessageContext) messageContext;
 
-  @wire(getRecord, { recordId: '$boatId', BOAT_FIELDS })
+  @wire(getRecord, { recordId: '$boatId', fields: BOAT_FIELDS })
   wiredRecord({ error, data }) {
     if (data) {
       console.log('data: ' + data);
@@ -36,27 +36,23 @@ export default class BoatMap extends LightningElement {
       const latitude = data.fields.Geolocation__Latitude__s.value;
       this.updateMap(longitude, latitude);
     } else if (error) {
+      console.log('error');
       this.error = error;
       this.boatId = undefined;
       this.mapMarkers = [];
     }
   }
 
-  // Subscribes to the message channel
   subscribeMC() {
-    console.log('inside subscribeMC');
-    // recordId is populated on Record Pages, and this component
-    // should not update when this component is on a record page.
     if (this.subscription || this.recordId) {
       return;
     }
-    // Subscribe to the message channel to retrieve the recordId and explicitly assign it to boatId.
-    console.log('after the if');
     this.subscription = subscribe(this.messageContext, BOATMC, (message) => this.handleMessageReceived(message), { scope: APPLICATION_SCOPE });
   }
 
   handleMessageReceived(msg) {
     this.boatId = msg.recordId;
+    console.log('this ' + this.boatId);
   }
 
   connectedCallback() {
