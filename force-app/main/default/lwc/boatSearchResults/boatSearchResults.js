@@ -71,10 +71,8 @@ export default class BoatSearchResults extends LightningElement {
 
     notifyLoading(isLoading) { 
         if (this.isLoading === true) {
-            console.log('isLoading is true');
             this.dispatchEvent(new CustomEvent('loading'));
         } else {
-            console.log('isLoading is false');
             this.dispatchEvent(new CustomEvent('doneloading'));
         }
     }

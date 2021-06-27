@@ -4,12 +4,10 @@ import { LightningElement, track } from 'lwc';
     isLoading = false;
     
     handleLoading() { 
-      console.log('inside handleLoading');
       this.isLoading = true;
     }
     
     handleDoneLoading() {
-      console.log('inside handleDoneLoading');
       this.isLoading = false;
      }
     
