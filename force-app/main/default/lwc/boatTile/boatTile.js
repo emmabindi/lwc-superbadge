@@ -1,16 +1,15 @@
 import { LightningElement, api } from "lwc";
 
-TILE_WRAPPER_SELECTED_CLASS = 'tile-wrapper selected';
-TILE_WRAPPER_UNSELECTED_CLASS = 'tile-wrapper';
+const TILE_WRAPPER_SELECTED_CLASS = 'tile-wrapper selected';
+const TILE_WRAPPER_UNSELECTED_CLASS = 'tile-wrapper';
 export default class BoatTile extends LightningElement {
     @api boat;
     @api selectedBoatId;
     
     // Getter for dynamically setting the background image for the picture
     get backgroundStyle() {
-      imgUrl = this.boat.Picture__c; 
-      console.log('imgUrl '+imgUrl);
-      return "background-image:url(" + {imgUrl} + ")";
+      const pictureUrl = this.boat.Picture__c;
+      return `background-image:url(${pictureUrl})`;
      }
 
     get tileClass() { 
@@ -29,8 +28,8 @@ export default class BoatTile extends LightningElement {
       in the boatSearchResults component in order to publish the message.*/
     selectBoat(event) { 
       console.log('inside selectBoat');
-      console.log(event.detail);
-      const boatSelect = new CustomEvent('boatselect', {detail: {boatId: this.boat.Id}});
+      //console.log(event.detail);
+      //const boatSelect = new CustomEvent('boatselect', {detail: {boatId: this.boat.Id}});
     }
   }
   

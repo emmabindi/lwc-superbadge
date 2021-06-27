@@ -1,4 +1,4 @@
-import { LightningElement, wire, api } from 'lwc';
+import { LightningElement, wire, api, track } from 'lwc';
 import { MessageContext } from 'lightning/messageService';
 import getBoats from '@salesforce/apex/BoatDataService.getBoats';
 import { getRecord, updateRecord } from 'lightning/uiRecordApi';
@@ -9,10 +9,12 @@ const SUCCESS_VARIANT = 'success';
 const ERROR_TITLE = 'Error'; 
 const ERROR_VARIANT = 'error'; 
 export default class BoatSearchResults extends LightningElement {
-    selectedBoatId; columns = []; 
+    selectedBoatId; 
+    columns = []; 
     boatTypeId = ''; 
-    boats; 
+    @track boats; 
     isLoading = false;
+    error;
 
     @wire(MessageContext)
     messageContext;
@@ -20,10 +22,14 @@ export default class BoatSearchResults extends LightningElement {
    @wire(getBoats, { boatTypeId: '$boatTypeId'})
     wiredBoats({error, data}) {
         if (error) {
+            this.error = error;
             console.log('error');
         } else if (data) {
             console.log('data ' + data);
-            // this.boats = data.boats;
+            this.boats = data;
+            data.forEach(boat =>{
+                console.log('boat: ' + boat.Name);
+            })
         }
     }
 
