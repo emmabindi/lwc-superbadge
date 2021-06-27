@@ -17,7 +17,6 @@ export default class BoatSearchForm extends LightningElement {
             }
         });
         this.searchOptions.unshift({ label: 'All Types', value: '' });
-        console.log('this.search '+ JSON.stringify(this.searchOptions));
       } else if (error) {
         this.searchOptions = undefined;
         this.error = error;
@@ -28,7 +27,6 @@ export default class BoatSearchForm extends LightningElement {
     handleSearchOptionChange(event) {
         event.preventDefault();
         this.selectedBoatTypeId = event.detail.value;
-        console.log('selectedBoatTypeId ' + this.selectedBoatTypeId);
         const searchEvent = new CustomEvent('search', {
             detail: {boatTypeId: this.selectedBoatTypeId}
         });

@@ -24,22 +24,20 @@ export default class BoatSearchResults extends LightningElement {
         if (error) {
             this.error = error;
             console.log('error');
+            this.isLoading = false;
+            this.notifyLoading();
         } else if (data) {
-            console.log('data ' + data);
             this.boats = data;
-            data.forEach(boat =>{
-                console.log('boat: ' + boat.Name);
-            })
+            this.isLoading = false;
+            this.notifyLoading();
         }
     }
 
     @api
     searchBoats(boatTypeId) { 
-        // this.notifyLoading;
-        console.log('inside searchBoats in Results');
-        console.log('54 boatTypeId ' + boatTypeId);
+        this.isLoading = true;
+        this.notifyLoading();
         this.boatTypeId = boatTypeId;
-        // here call wiredBoats or getBoats with a param?
         this.wiredBoats(this.boatTypeId);
     }
 
@@ -74,17 +72,15 @@ export default class BoatSearchResults extends LightningElement {
         .catch(error => {})
         .finally(() => {});
     }
-    // Check the current value of isLoading before dispatching the doneloading or loading custom event
-    notifyLoading(isLoading) { }
 
-
-    /*
-    The component boatSearchResults gets the data returned by 
-    getBoats(), which stores the search results in a component
-     attribute boats through a wired function called wiredBoats(). 
-     Next, boatSearchResults loops through the results and displays 
-     each one as a boatTile, arranged in a responsive grid. 
-     Use a scoped <lightning-tabset> that’s only rendered if 
-     the attribute boats contains data to be displayed.
-    */
+    notifyLoading(isLoading) { 
+        if (this.isLoading === true) {
+            console.log('isLoading is true');
+            this.dispatchEvent(new CustomEvent('loading'));
+        } else {
+            console.log('isLoading is false');
+            this.dispatchEvent(new CustomEvent('doneloading'));
+        }
+        // this is where to dispatch events loading and doneloading for search parent to handle the spinner
+    }
 }
