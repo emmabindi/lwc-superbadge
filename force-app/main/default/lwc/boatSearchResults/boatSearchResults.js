@@ -47,7 +47,10 @@ export default class BoatSearchResults extends LightningElement {
     refresh() { }
     
     // this function must update selectedBoatId and call sendMessageService
-    updateSelectedTile() { }
+    updateSelectedTile(event) { 
+        console.log('inside updateSelectedTile in results');
+        console.log('e: ' + event.detail.boatId);
+    }
     
     // Publishes the selected boat Id on the BoatMC.
     sendMessageService(boatId) { 

@@ -20,16 +20,17 @@ export default class BoatTile extends LightningElement {
       }
     }
     
-    // Fires event with the Id of the boat that has been selected.
-    /*So make sure to add the required logic into selectBoat() to send the 
-    correct detail information, assigning boat.Id to boatId and then adding it to a 
-    custom event named boatselect, so the boatSearchResults component can propagate
-     the event using the message service. Make sure you are wiring the messageContext
-      in the boatSearchResults component in order to publish the message.*/
-    selectBoat(event) { 
-      console.log('inside selectBoat');
-      //console.log(event.detail);
-      //const boatSelect = new CustomEvent('boatselect', {detail: {boatId: this.boat.Id}});
+    /*
+     Make sure you are wiring the messageContext in the boatSearchResults component
+    in order to publish the message.*/
+    selectBoat() { 
+      console.log('inside selectBoat in boatTile');
+      console.log(this.boat.Id);
+      this.selectedBoatId = this.boat.Id;
+      const boatSelect = new CustomEvent('boatselect', {detail: {boatId: this.selectedBoatId}});
+      console.log('event: ' + boatSelect);
+      console.log('event detail: ' + boatSelect.detail.boatId);
+      this.dispatchEvent(boatSelect);
     }
   }
   
