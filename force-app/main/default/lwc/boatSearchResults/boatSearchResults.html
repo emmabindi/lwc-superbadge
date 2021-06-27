@@ -5,12 +5,12 @@
   <lightning-tabset variant="scoped">
     <lightning-tab label="Gallery">
       <div class="slds-scrollable_y">
-        <lightning-layout multiple-rows class="slds-align-middle">
+        <lightning-layout multiple-rows="true" horizontal-align="center">
           <template if:true={boats}>
             <template for:each={boats} for:item="boat">
               <lightning-layout-item
                 key={boat.Id}
-                class="slds-p-around_small"
+                padding="around-small"
                 size="12"
                 small-device-size="6"
                 medium-device-size="4"

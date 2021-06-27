@@ -1,15 +1,13 @@
 <template>
-  <!-- 
-    The component boatSearch must also have a button to create a new boat. 
-    To keep the design simple to use and maintain, Byanca requested you use a 
-    <lightning-button> inside a slot called actions. Label it New Boat and 
-        invoke a function named createNewBoat() that uses the NavigationMixin 
-        extension to open a standard form so the user can create a new boat record.
-        -->
-  <lightning-layout multiple-rows>
+  <lightning-layout multiple-rows="rue">
     <lightning-layout-item size="12">
       <lightning-card title="Find a Boat">
-        <!-- New Boat button goes here -->
+        <slot title="actions">
+          <lightning-button
+            label="New Boat"
+            onclick={createNewBoat}
+          ></lightning-button>
+        </slot>
         <p class="slds-var-p-horizontal_small">
           <c-boat-search-form onsearch={searchBoats}> </c-boat-search-form>
         </p>
