@@ -44,18 +44,14 @@ export default class BoatSearchResults extends LightningElement {
   // this public function must refresh the boats asynchronously uses notifyLoading
     refresh() { }
     
-    // this function must update selectedBoatId and call sendMessageService
     updateSelectedTile(event) { 
-        console.log('inside updateSelectedTile in results');
-        console.log('e: ' + event.detail.boatId);
         this.selectedBoatId = event.detail.boatId;
-        publish(this.messageContext, BOAT_SELECTED_MESSAGE, 
-            { recordId: this.selectedBoatId })
+        this.sendMessageService(this.selectedBoatId);
     }
     
-    // Publishes the selected boat Id on the BoatMC.
     sendMessageService(boatId) { 
-        // explicitly pass boatId to the parameter recordId
+        publish(this.messageContext, BOAT_SELECTED_MESSAGE, 
+            { recordId: boatId })
     }
     
     // The handleSave method must save the changes in the Boat Editor
@@ -81,6 +77,5 @@ export default class BoatSearchResults extends LightningElement {
             console.log('isLoading is false');
             this.dispatchEvent(new CustomEvent('doneloading'));
         }
-        // this is where to dispatch events loading and doneloading for search parent to handle the spinner
     }
 }
