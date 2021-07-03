@@ -1,8 +1,11 @@
 import { LightningElement, wire, api, track } from 'lwc';
 import { publish, MessageContext } from 'lightning/messageService';
 import getBoats from '@salesforce/apex/BoatDataService.getBoats';
+import updateBoatList from '@salesforce/apex/BoatDataService.updateBoatList';
 import BOAT_SELECTED_MESSAGE from '@salesforce/messageChannel/BoatMessageChannel__c';
-import { getRecord, updateRecord } from 'lightning/uiRecordApi';
+import { ShowToastEvent } from 'lightning/platformShowToastEvent';
+import { getRecordNotifyChange } from 'lightning/uiRecordApi';
+import { refreshApex } from '@salesforce/apex';
 
 const SUCCESS_TITLE = 'Success'; 
 const MESSAGE_SHIP_IT = 'Ship it!'; 
@@ -23,33 +26,45 @@ export default class BoatSearchResults extends LightningElement {
     isLoading = false;
     error;
     columns = columns; 
+    draftValues = [];
 
-    @wire(MessageContext) messageContext;
+   @wire(MessageContext) messageContext;
 
    @wire(getBoats, { boatTypeId: '$boatTypeId'})
     wiredBoats({error, data}) {
         if (error) {
             this.error = error;
             console.log('error');
-            this.isLoading = false;
-            this.notifyLoading();
         } else if (data) {
-            this.boats = data;
-            this.isLoading = false;
-            this.notifyLoading();
+            this.boats = data;     
         }
+        this.isLoading = false;
+        this.notifyLoading(this.isLoading);
     }
 
     @api
     searchBoats(boatTypeId) { 
         this.isLoading = true;
-        this.notifyLoading();
+        this.notifyLoading(this.isLoading);
         this.boatTypeId = boatTypeId;
         this.wiredBoats(this.boatTypeId);
     }
-
+ 
   // this public function must refresh the boats asynchronously uses notifyLoading
-    refresh() { }
+    @api
+    async refresh() {
+        console.log('inside refresh');
+        this.isLoading = true;
+        this.notifyLoading(this.isLoading);
+        console.log('before await');
+
+        await refreshApex(this.boats);
+        
+        console.log('after refreshApex ');
+
+        this.isLoading = false;
+        this.notifyLoading(this.isLoading);
+     }
     
     updateSelectedTile(event) { 
         this.selectedBoatId = event.detail.boatId;
@@ -61,19 +76,44 @@ export default class BoatSearchResults extends LightningElement {
             { recordId: boatId })
     }
     
-    // The handleSave method must save the changes in the Boat Editor
-    // passing the updated fields from draftValues to the 
-    // Apex method updateBoatList(Object data).
-    // Show a toast message with the title
     // clear lightning-datatable draft values
     handleSave(event) {
-        // notify loading
+        this.isLoading = true;
+        this.notifyLoading(this.isLoading);
+        
         const updatedFields = event.detail.draftValues;
-        // Update the records via Apex
+        const notifyChangeIds = updatedFields.map(row => {
+            return {
+                "recordId": row.Id
+            };
+        });
+
         updateBoatList({data: updatedFields})
-        .then(() => {})
-        .catch(error => {})
-        .finally(() => {});
+        .then((result) => {
+            console.log('result: ' + result);
+            this.dispatchEvent(new ShowToastEvent({
+                title: SUCCESS_TITLE,
+                message: MESSAGE_SHIP_IT,
+                variant: SUCCESS_VARIANT
+            }));
+
+            getRecordNotifyChange(notifyChangeIds);
+            console.log('this.notifyChangeIds[0] ' + notifyChangeIds[0].recordId);
+            this.refresh();
+        })
+        .catch(error => {
+            this.dispatchEvent(new ShowToastEvent({
+                title: ERROR_TITLE,
+                variant: ERROR_VARIANT
+            }))
+            
+        })
+        .finally(() => {
+            console.log('Finally');
+            this.isLoading = false;
+            this.notifyLoading(this.isLoading);
+            this.draftValues = [];
+        });
     }
 
     notifyLoading(isLoading) { 

@@ -36,14 +36,14 @@
             key-field="Id"
             columns={columns}
             onsave={handleSave}
+            draft-values={draftValues}
             hide-checkbox-column="true"
           ></lightning-datatable>
         </template>
       </div>
-      <!-- Scrollable div and lightning datatable go here -->
     </lightning-tab>
     <lightning-tab label="Boats Near Me">
-      <c-boats-near-me boattypeid={boatTypeId}></c-boats-near-me>
+      <c-boats-near-me boat-type-id={boatTypeId}></c-boats-near-me>
     </lightning-tab>
   </lightning-tabset>
 </template>
