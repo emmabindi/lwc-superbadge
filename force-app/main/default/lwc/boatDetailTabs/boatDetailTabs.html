@@ -1,17 +1,35 @@
 <template>
   <template if:false={wiredRecord.data}>
-    <!-- lightning card for the label when wiredRecord has no data goes here -->
-    <span class="slds-align_absolute-center no-boat-height">
-      {label.labelPleaseSelectABoat}
-    </span>
+    <lightning-card>
+      <span class="slds-align_absolute-center no-boat-height">
+        {label.labelPleaseSelectABoat}
+      </span>
+    </lightning-card>
   </template>
   <lightning-tabset variant="scoped">
-    <lightning-tab label="Details">
+    <lightning-tab label={label.labelDetails}>
       <template if:true={wiredRecord.data}>
+        <p>Its true</p>
         <lightning-card title={boatName} icon={detailsTabIconName}>
-          <!-- lightning card for the content when wiredRecord has data goes here -->
+          <p>card details here</p>
         </lightning-card>
       </template>
+    </lightning-tab>
+    <lightning-tab label={label.labelReviews}></lightning-tab>
+
+    <!-- 
+           <c-boat-reviews value={reviews}>
+               pass in currently selected boat id to this 
+               component in line above 
+            </c-boat-reviews>
+     -->
+
+    <lightning-tab label={label.labelAddReview}>
+      <!--  <c-boat-add-review-form oncreatereview={handleReviewCreated}>
+            to the above, pass in the currently selected boat Id 
+                  </c-boat-add-review-form>
+
+        -->
     </lightning-tab>
   </lightning-tabset>
 </template>

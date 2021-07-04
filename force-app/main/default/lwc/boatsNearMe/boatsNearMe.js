@@ -39,8 +39,6 @@ export default class BoatsNearMe extends LightningElement {
       navigator.geolocation.getCurrentPosition(position => {
           this.latitude = position.coords.latitude;
           this.longitude = position.coords.longitude;
-          console.log('lat: ' + this.latitude);
-          console.log('long: ' + this.longitude);
       });
    }
    

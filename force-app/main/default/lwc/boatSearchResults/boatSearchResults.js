@@ -55,15 +55,11 @@ export default class BoatSearchResults extends LightningElement {
   // this public function must refresh the boats asynchronously uses notifyLoading
     @api
     async refresh() {
-        console.log('inside refresh');
         this.isLoading = true;
         this.notifyLoading(this.isLoading);
-        console.log('before await');
 
         await refreshApex(this.boats);
         
-        console.log('after refreshApex ');
-
         this.isLoading = false;
         this.notifyLoading(this.isLoading);
      }
@@ -92,7 +88,6 @@ export default class BoatSearchResults extends LightningElement {
 
         updateBoatList({data: updatedFields})
         .then((result) => {
-            console.log('result: ' + result);
             this.dispatchEvent(new ShowToastEvent({
                 title: SUCCESS_TITLE,
                 message: MESSAGE_SHIP_IT,
@@ -100,7 +95,6 @@ export default class BoatSearchResults extends LightningElement {
             }));
 
             getRecordNotifyChange(notifyChangeIds);
-            console.log('this.notifyChangeIds[0] ' + notifyChangeIds[0].recordId);
             this.refresh();
         })
         .catch(error => {
@@ -111,7 +105,6 @@ export default class BoatSearchResults extends LightningElement {
             
         })
         .finally(() => {
-            console.log('Finally');
             this.isLoading = false;
             this.notifyLoading(this.isLoading);
             this.draftValues = [];

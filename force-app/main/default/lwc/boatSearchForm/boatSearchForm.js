@@ -20,7 +20,6 @@ export default class BoatSearchForm extends LightningElement {
       } else if (error) {
         this.searchOptions = undefined;
         this.error = error;
-        console.log('inside error');
       }
     }
     
