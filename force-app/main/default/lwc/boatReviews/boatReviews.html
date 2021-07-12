@@ -23,8 +23,13 @@
                         "
                     >
                         <p>
-                            {boatReview.CreatedBy.Name}
-                        <span> {boatReview.CreatedBy.CompanyName}</span>
+                            <a 
+                            onclick={navigateToRecord} 
+                            data-record-id={boatReview.CreatedBy.Id} 
+                            title={boatReview.CreatedBy.Name}>
+                                {boatReview.CreatedBy.Name}
+                            </a>
+                            <span>- {boatReview.CreatedBy.CompanyName}</span>
                         </p>
                     </div>
                     <p class="slds-text-body_small">
