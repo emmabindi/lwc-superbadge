@@ -41,10 +41,9 @@
         </lightning-card>
       </template>
     </lightning-tab>
-    <lightning-tab label={label.labelReviews}></lightning-tab>
-
-    <c-boat-reviews value={reviews} recordid={boatId}> </c-boat-reviews>
-
+    <lightning-tab label={label.labelReviews}>
+      <c-boat-reviews record-id={boatId}> </c-boat-reviews>
+    </lightning-tab>
     <lightning-tab label={label.labelAddReview}>
       <c-boat-add-review-form
         record-id={boatId}
