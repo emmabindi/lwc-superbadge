@@ -4,6 +4,7 @@
     onsubmit={handleSubmit}
     onsuccess={handleSuccess}
   >
+    <lightning-messages></lightning-messages>
     <lightning-layout multiple-rows vertical-align="start">
       <lightning-layout-item size="8" padding="horizontal-small">
         <div class="slds-form-element">
@@ -35,7 +36,11 @@
       </lightning-layout-item>
     </lightning-layout>
     <div class="slds-align_absolute-center" style="margin-top: 5px">
-      <!-- add submit button -->
+      <lightning-button
+        label="Submit"
+        icon="utility:save"
+        type="submit"
+      ></lightning-button>
     </div>
   </lightning-record-edit-form>
 </template>

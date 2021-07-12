@@ -41,12 +41,10 @@ export default class BoatDetailTabs extends NavigationMixin(LightningElement) {
   @wire(MessageContext) messageContext;
   
   get detailsTabIconName() { 
-      console.log('inside tab icon');
       return this.wiredRecord.data ? 'utility:anchor' : null;
   }
   
   get boatName() { 
-    console.log('inside boatName');
     let name = getFieldValue(this.wiredRecord.data, BOAT_NAME_FIELD);
     console.log('name ' + name);
     return getFieldValue(this.wiredRecord.data, BOAT_NAME_FIELD);

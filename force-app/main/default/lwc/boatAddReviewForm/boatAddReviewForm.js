@@ -1,4 +1,4 @@
-import { LightningElement } from 'lwc';
+import { LightningElement, api } from 'lwc';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent'
 
 import BOAT_REVIEW_OBJECT from '@salesforce/schema/BoatReview__c';
@@ -19,26 +19,44 @@ export default class BoatAddReviewForm extends LightningElement {
     labelRating  = 'Rating';
     
     // Public Getter and Setter to allow for logic to run on recordId change
-    get recordId() { }
+    @api
+    get recordId() {
+        return this.boatId;
+     }
     set recordId(value) {
+      console.log('value: ' + value);
       //sets boatId attribute
+      this.setAttribute('boatId', value);
       //sets boatId assignment
+      this.boatId = value;
     }
     
     // Gets user rating input from stars component
     handleRatingChanged(event) {
-        console.log('inside handleRatingChanged');
         console.log('rating: ' + event.detail.rating);
+        this.rating = event.detail.rating;
      }
     
     // Custom submission handler to properly set Rating
     // This function must prevent the anchor element from navigating to a URL.
     // form to be submitted: lightning-record-edit-form
-    handleSubmit(event) { }
+    handleSubmit(event) { 
+        event.preventDefault(); 
+        const fields = event.detail.fields;
+        fields.Rating__c = this.rating;
+        fields.Boat__c = this.boatId;
+        console.log('fields ' + JSON.stringify(fields));
+        this.template.querySelector('lightning-record-edit-form').submit(fields);
+        console.log('hit submit');
+    }
     
     // Shows a toast message once form is submitted successfully
     // Dispatches event when a review is created
-    handleSuccess() {
+    handleSuccess(event) {
+      console.log('success');
+      const updatedRecord = event.detail.id;
+      console.log('onsuccess: ', updatedRecord);
+   
       // TODO: dispatch the custom event 
       this.dispatchEvent(new ShowToastEvent({
           title: SUCCESS_TITLE,
@@ -49,6 +67,13 @@ export default class BoatAddReviewForm extends LightningElement {
     
     // Clears form data upon submission
     // TODO: it must reset each lightning-input-field
-    handleReset() { }
+    handleReset() { 
+        const inputFields = this.template.querySelectorAll('lightning-input-field');
+        if (inputFields) {
+            inputFields.forEach(field => {
+                field.reset();
+            });
+        }
+    }
   }
   
