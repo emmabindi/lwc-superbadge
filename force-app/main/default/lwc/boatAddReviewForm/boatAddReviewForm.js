@@ -56,12 +56,14 @@ export default class BoatAddReviewForm extends LightningElement {
       console.log('success');
       const updatedRecord = event.detail.id;
       console.log('onsuccess: ', updatedRecord);
-   
-      // TODO: dispatch the custom event 
+      
+      this.dispatchEvent(new CustomEvent('createreview'));
+      
       this.dispatchEvent(new ShowToastEvent({
           title: SUCCESS_TITLE,
           variant: SUCCESS_VARIANT
       }));
+
       this.handleReset();
     }
     

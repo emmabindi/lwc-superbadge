@@ -43,12 +43,7 @@
     </lightning-tab>
     <lightning-tab label={label.labelReviews}></lightning-tab>
 
-    <!-- 
-           <c-boat-reviews value={reviews}>
-               pass in currently selected boat id to this 
-               component in line above 
-            </c-boat-reviews>
-     -->
+    <c-boat-reviews value={reviews} recordid={boatId}> </c-boat-reviews>
 
     <lightning-tab label={label.labelAddReview}>
       <c-boat-add-review-form
