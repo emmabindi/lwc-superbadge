@@ -23,7 +23,6 @@ export default class FiveStarRating extends LightningElement {
     if (this.isRendered) {
       return;
     }
-    console.log('before loadScript called');
     this.loadScript();
     this.isRendered = true;
   }
@@ -32,12 +31,9 @@ export default class FiveStarRating extends LightningElement {
   //call the initializeRating function after scripts are loaded
   //display a toast with error message if there is an error loading script
   loadScript() {
-    console.log('before loadScript');
-    Promise.all([
       loadScript(this, fivestar + '/rating.js'),
       loadStyle(this, fivestar + '/rating.css')
-    ]).then(() => {
-      console.log('after loadStyle');
+    .then(() => {
         this.initializeRating();
     }).catch((error) => {
       console.log('error ' + error);
@@ -69,7 +65,7 @@ export default class FiveStarRating extends LightningElement {
   // {detail: { rating: CURRENT_RATING }}); when the user selects a rating
   ratingChanged(rating) {
     this.dispatchEvent(new CustomEvent('ratingchange', {
-      detail: { rating: CURRENT_RATING}
+      detail: { rating: rating}
     }));
   }
 }
