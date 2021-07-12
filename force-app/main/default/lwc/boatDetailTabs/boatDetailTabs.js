@@ -15,10 +15,10 @@ import { getRecord, getFieldValue } from 'lightning/uiRecordApi';
 import BOATMC from '@salesforce/messageChannel/BoatMessageChannel__c';
 import { wire, api, track } from 'lwc';
 import { APPLICATION_SCOPE, MessageContext, subscribe } from 'lightning/messageService';
+import { NavigationMixin } from 'lightning/navigation';
 
 const BOAT_FIELDS = [BOAT_ID_FIELD, BOAT_NAME_FIELD];
-
-export default class BoatDetailTabs extends LightningElement {
+export default class BoatDetailTabs extends NavigationMixin(LightningElement) {
   @api boatId;
   @api boatObject = BOAT_OBJECT;
 
@@ -73,8 +73,16 @@ export default class BoatDetailTabs extends LightningElement {
       this.subscribeMC();
   }
   
-  // Navigates to record page
-  navigateToRecordViewPage() { }
+  navigateToRecordViewPage() {
+    this[NavigationMixin.Navigate]({
+      type: 'standard__recordPage',
+      attributes: {
+        recordId: this.boatId,
+        objectApiName: this.boatObject,
+        actionName: 'view'
+      }
+    });
+   }
   
   // Navigates back to the review list, and refreshes reviews component
   handleReviewCreated() { 
