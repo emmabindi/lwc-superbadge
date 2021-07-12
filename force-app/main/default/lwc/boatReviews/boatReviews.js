@@ -22,12 +22,20 @@ export default class BoatReviews extends LightningElement {
     }
     
     // Getter to determine if there are reviews to display
+    /* Develop a getter named reviewsToShow() that returns true if boatReviews is not null, 
+    not undefined, and if it has at least one record. Otherwise, it returns false. */
     get reviewsToShow() {
-        return this.boatReviews ? true : false;
+        if (this.boatReviews != null) {
+            return true;
+        } else {
+            return false;
+        }
      }
     
     // Public method to force a refresh of the reviews invoking getReviews
-    refresh() { }
+    refresh() { 
+        this.template.querySelector('c-boat-reviews').refresh();
+    }
     
     // Imperative Apex call to get reviews for given boat
     // returns immediately if boatId is empty or null
