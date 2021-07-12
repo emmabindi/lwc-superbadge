@@ -51,11 +51,11 @@
      -->
 
     <lightning-tab label={label.labelAddReview}>
-      <!--  <c-boat-add-review-form oncreatereview={handleReviewCreated}>
-            to the above, pass in the currently selected boat Id 
-                  </c-boat-add-review-form>
-
-        -->
+      <c-boat-add-review-form
+        record-id={boatId}
+        oncreatereview={handleReviewCreated}
+      >
+      </c-boat-add-review-form>
     </lightning-tab>
   </lightning-tabset>
 </template>
