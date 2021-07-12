@@ -9,9 +9,35 @@
   <lightning-tabset variant="scoped">
     <lightning-tab label={label.labelDetails}>
       <template if:true={wiredRecord.data}>
-        <p>Its true</p>
         <lightning-card title={boatName} icon={detailsTabIconName}>
-          <p>card details here</p>
+          <lightning-record-view-form
+            object-api-name={boatObject}
+            record-id={boatId}
+            density="compact"
+          >
+            <lightning-output-field
+              field-name={typeField}
+            ></lightning-output-field>
+
+            <lightning-output-field
+              field-name={lengthField}
+            ></lightning-output-field>
+
+            <lightning-output-field
+              field-name={priceField}
+            ></lightning-output-field>
+
+            <lightning-output-field
+              field-name={descriptionField}
+            ></lightning-output-field>
+          </lightning-record-view-form>
+
+          <lightning-button
+            variant="neutral"
+            label={label.labelFullDetails}
+            onclick={navigateToRecordViewPage}
+            slot="actions"
+          ></lightning-button>
         </lightning-card>
       </template>
     </lightning-tab>

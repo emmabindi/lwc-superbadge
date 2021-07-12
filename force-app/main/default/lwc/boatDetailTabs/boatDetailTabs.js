@@ -4,8 +4,13 @@ import labelReviews from '@salesforce/label/c.Reviews';
 import labelAddReview from '@salesforce/label/c.Add_Review'; 
 import labelFullDetails from '@salesforce/label/c.Full_Details'; 
 import labelPleaseSelectABoat from '@salesforce/label/c.Please_select_a_boat'; 
+import BOAT_OBJECT from '@salesforce/schema/Boat__c';
 import BOAT_ID_FIELD from '@salesforce/schema/Boat__c.Id';
 import BOAT_NAME_FIELD from '@salesforce/schema/Boat__c.Name';
+import BOAT_TYPE_FIELD from '@salesforce/schema/Boat__c.BoatType__c';
+import BOAT_LENGTH_FIELD from '@salesforce/schema/Boat__c.Length__c';
+import BOAT_PRICE_FIELD from '@salesforce/schema/Boat__c.Price__c';
+import BOAT_DESCRIPTION_FIELD from '@salesforce/schema/Boat__c.Description__c';
 import { getRecord, getFieldValue } from 'lightning/uiRecordApi';
 import BOATMC from '@salesforce/messageChannel/BoatMessageChannel__c';
 import { wire, api, track } from 'lwc';
@@ -14,7 +19,9 @@ import { APPLICATION_SCOPE, MessageContext, subscribe } from 'lightning/messageS
 const BOAT_FIELDS = [BOAT_ID_FIELD, BOAT_NAME_FIELD];
 
 export default class BoatDetailTabs extends LightningElement {
-  @track boatId;
+  @api boatId;
+  @api boatObject = BOAT_OBJECT;
+
   label = {
     labelDetails,
     labelReviews,
@@ -22,7 +29,11 @@ export default class BoatDetailTabs extends LightningElement {
     labelFullDetails,
     labelPleaseSelectABoat,
   };
-  subscription = null;   
+  subscription = null;
+  typeField = BOAT_TYPE_FIELD;
+  priceField = BOAT_PRICE_FIELD;
+  descriptionField = BOAT_DESCRIPTION_FIELD;   
+  lengthField = BOAT_LENGTH_FIELD;
 
   @wire(getRecord, { recordId: '$boatId', fields: BOAT_FIELDS})
   wiredRecord;
@@ -30,6 +41,7 @@ export default class BoatDetailTabs extends LightningElement {
   @wire(MessageContext) messageContext;
   
   get detailsTabIconName() { 
+      console.log('inside tab icon');
       return this.wiredRecord.data ? 'utility:anchor' : null;
   }
   
