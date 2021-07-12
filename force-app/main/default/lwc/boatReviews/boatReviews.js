@@ -14,11 +14,10 @@ export default class BoatReviews extends LightningElement {
         return this.boatId;
     }
     set recordId(value) {
-      console.log('inside set, val: ' + value);
-      this.setAttribute('boatId', value); //sets boatId attribute
+      console.log("inside set, val: " + value);
+      this.setAttribute("boatId", value); //sets boatId attribute
       this.boatId = value; //sets boatId assignment
-      //get reviews associated with boatId
-      this.getReviews(this.boatId);
+      this.getReviews(this.boatId); //get reviews associated with boatId
     }
     
     // Getter to determine if there are reviews to display
@@ -33,8 +32,10 @@ export default class BoatReviews extends LightningElement {
      }
     
     // Public method to force a refresh of the reviews invoking getReviews
+    @api
     refresh() { 
-        this.template.querySelector('c-boat-reviews').refresh();
+        // this.template.querySelector('c-boat-reviews').refresh();
+        this.getReviews();
     }
     
     // Imperative Apex call to get reviews for given boat
