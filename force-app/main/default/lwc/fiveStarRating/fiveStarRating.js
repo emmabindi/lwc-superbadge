@@ -1,5 +1,5 @@
-import { api } from 'lwc';
-import fiveStar from '@salesforce/resourceUrl/fivestar';
+import { LightningElement, api } from 'lwc';
+import fivestar from '@salesforce/resourceUrl/fivestar';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent'; 
 import { loadStyle, loadScript } from 'lightning/platformResourceLoader';
 
@@ -23,6 +23,7 @@ export default class FiveStarRating extends LightningElement {
     if (this.isRendered) {
       return;
     }
+    console.log('before loadScript called');
     this.loadScript();
     this.isRendered = true;
   }
@@ -31,8 +32,12 @@ export default class FiveStarRating extends LightningElement {
   //call the initializeRating function after scripts are loaded
   //display a toast with error message if there is an error loading script
   loadScript() {
-    loadScript(this, fivestar + '/rating.js'),
-    loadStyle(this, fivestar + '/rating.css').then(() => {
+    console.log('before loadScript');
+    Promise.all([
+      loadScript(this, fivestar + '/rating.js'),
+      loadStyle(this, fivestar + '/rating.css')
+    ]).then(() => {
+      console.log('after loadStyle');
         this.initializeRating();
     }).catch((error) => {
       console.log('error ' + error);
