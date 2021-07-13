@@ -11,14 +11,12 @@ export default class BoatReviews extends NavigationMixin(LightningElement) {
   // Getter and Setter to allow for logic to run on recordId change
   @api
   get recordId() {
-    console.log("inside get " + this.boatId);
     return this.boatId;
   }
   set recordId(value) {
-    console.log("inside set, val: " + value);
     this.setAttribute("boatId", value); //sets boatId attribute
     this.boatId = value; //sets boatId assignment
-    this.getReviews(this.boatId); //get reviews associated with boatId
+    this.getReviews(); //get reviews associated with boatId
   }
 
   // Getter to determine if there are reviews to display
@@ -44,15 +42,11 @@ export default class BoatReviews extends NavigationMixin(LightningElement) {
   // sets isLoading to true during the process and false when it’s completed
   // Gets all the boatReviews from the result, checking for errors.
   getReviews() {
-    console.log("get reviews");
-
     if (!this.boatId) return;
-    console.log("before get " + this.boatId);
     this.isLoading = true;
 
     getAllReviews({ boatId: this.boatId })
       .then((result) => {
-        console.log("result: " + JSON.stringify(result));
         this.boatReviews = result;
         this.isLoading = false;
       })
