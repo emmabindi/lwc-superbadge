@@ -9,35 +9,35 @@
   <lightning-tabset variant="scoped">
     <lightning-tab label={label.labelDetails}>
       <template if:true={wiredRecord.data}>
-        <lightning-card title={boatName} icon={detailsTabIconName}>
-          <lightning-record-view-form
-            object-api-name={boatObject}
-            record-id={boatId}
-            density="compact"
-          >
-            <lightning-output-field
-              field-name={typeField}
-            ></lightning-output-field>
-
-            <lightning-output-field
-              field-name={lengthField}
-            ></lightning-output-field>
-
-            <lightning-output-field
-              field-name={priceField}
-            ></lightning-output-field>
-
-            <lightning-output-field
-              field-name={descriptionField}
-            ></lightning-output-field>
-          </lightning-record-view-form>
-
+        <lightning-card title={boatName} icon-name={detailsTabIconName}>
           <lightning-button
             variant="neutral"
             label={label.labelFullDetails}
             onclick={navigateToRecordViewPage}
             slot="actions"
           ></lightning-button>
+
+          <lightning-record-view-form
+            object-api-name={Boat__c}
+            record-id={boatId}
+            density="compact"
+          >
+            <lightning-output-field
+              field-name={BoatType__c}
+            ></lightning-output-field>
+
+            <lightning-output-field
+              field-name={Length__c}
+            ></lightning-output-field>
+
+            <lightning-output-field
+              field-name={Price__c}
+            ></lightning-output-field>
+
+            <lightning-output-field
+              field-name={Description__c}
+            ></lightning-output-field>
+          </lightning-record-view-form>
         </lightning-card>
       </template>
     </lightning-tab>
